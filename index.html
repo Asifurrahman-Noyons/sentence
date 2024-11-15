@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Grammar Tabs</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles */
+        .card {
+            border-radius: 12px;
+            padding: 25px;
+            background-color: #ffffff;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease-in-out;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .example-box {
+            background-color: #f9fafb;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 5px solid #4F46E5;
+        }
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #4F46E5;
+            margin-bottom: 12px;
+        }
+        .section-content {
+            font-size: 1rem;
+            color: #333333;
+            margin-bottom: 16px;
+        }
+        .example-list {
+            list-style-type: disc;
+            padding-left: 20px;
+            margin-top: 10px;
+        }
+        .example-list li {
+            margin-bottom: 8px;
+            font-size: 1rem;
+            color: #555555;
+        }
+        .progress-bar-container {
+            width: 100%;
+            background-color: #e5e7eb;
+            border-radius: 20px;
+            height: 10px;
+            margin-bottom: 20px;
+        }
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background-color: #4F46E5;
+            border-radius: 20px;
+        }
+        .tab-container {
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #4F46E5 #e5e7eb;
+        }
+        .tab-container::-webkit-scrollbar {
+            height: 8px;
+        }
+        .tab-container::-webkit-scrollbar-thumb {
+            background-color: #4F46E5;
+            border-radius: 10px;
+        }
+        .tab-container::-webkit-scrollbar-track {
+            background-color: #e5e7eb;
+        }
+        .tab-button {
+            flex: 0 0 auto;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-weight: 600;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            margin-right: 10px;
+        }
+        .tab-button.active {
+            background-color: #4F46E5;
+            color: #ffffff;
+        }
+        .tab-button:hover {
+            background-color: #6366F1;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-900">
+
+    <div class="container mx-auto p-4">
+        <!--<h1 class="text-4xl font-bold text-center text-indigo-600 mb-8">Learn English Grammar</h1>-->
+
+        <!-- Tab Buttons (Scrollable) -->
+        <div class="tab-container mb-6">
+            <button class="tab-button active" data-tab="sentence">Sentence</button>
+            <button class="tab-button" data-tab="kinds-of-sentence">Kinds of Sentence</button>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-bar-container">
+            <div id="progress-bar" class="progress-bar"></div>
+        </div>
+
+        <!-- Content Section -->
+        <div id="content-container" class="space-y-8">
+            <!-- Content dynamically injected here -->
+        </div>
+    </div>
+
+    <script>
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const contentContainer = document.getElementById('content-container');
+
+// Data for tabs with updated Kinds of Sentence content
+const tabsData = {
+    sentence: [
+        {
+            sectionTitle: "Definition",
+            sectionContent: "A sentence is a word or group of words that must express a complete idea or sense or meaning and that may consist of a subject and a verb. </br></br> Also, it may have an object or a complement, and the words must be ordered properly.",
+            examples: [
+                "যে শব্দ বা শব্দ সমষ্টি দ্বারা সম্পূর্ণ অর্থ প্রকাশ পায় এবং যা সাধারণত কর্তা এবং ক্রিয়া দ্বারা গঠিত তাকে sentence বা বাক্য বলা হয় ।"
+            ]
+        },
+        {
+            sectionTitle: "Example",
+            sectionContent: "Example of a sentence structure:",
+            examples: [
+                "We practice English everyday. (Here 'we' is the subject, 'practice' is the verb, 'English' is the object, and 'everyday' is an adverb)"
+            ]
+        },
+        {
+            sectionTitle: "Parts of a Sentence",
+            sectionContent: "Basically there are two parts of a sentence:",
+            examples: [
+                "Subject: A subject of a sentence is a person or thing about which something is said or written.",
+                "Predicate: The Predicate says what the Subject does.",
+                "যে ব্যক্তি বা বস্তু সম্পর্কে কোনকিছু বলা বা লিখা হয় তাকে Subject বা কর্তা বলে ।",
+                "যা subject বা কর্তা সম্পর্কে বলে বা করে বা লিখে তাকে Predicate বলা হয় ।"
+            ]
+        },
+        {
+            sectionTitle: "Additional Examples",
+            sectionContent: "In the example above, 'We' is the subject, and 'practice English everyday' is the Predicate. A sentence usually starts with a subject, followed by the predicate.",
+            examples: [
+                "In cases like orders, advice, or requests, the subject may be omitted.",
+                "Example: (You) Keep quiet.",
+                "(You) Take care of your health.",
+                "(I) Thank you.",
+                "Sometimes sentences start with the predicate.",
+                "Example: Long live Bangladesh.",
+                "Down went the Titanic."
+            ]
+        },
+        {
+            sectionTitle: "Kinds of Sentence",
+            sectionContent: "Sentences can be classified into five categories, according to their meaning or function. They are:-",
+            examples: [
+                "Assertive Sentence.",
+                "Interrogative Sentence.",
+                "Imperative Sentence.",
+                "Optative Sentence.",
+                "Exclamatory Sentence."
+            ]
+        }
+    ],
+    "kinds-of-sentence": [
+        {
+            sectionTitle: "Kinds of Sentence",
+            sectionContent: "Sentences can be classified into five categories, according to their meaning or function. </br> </br> অর্থ বা কাজের ওপর ভিত্তি করে ইংরেজিতে Sentence কে সাধারণত পাঁচ ভাগে ভাগ করা যায়।",
+            examples: [
+                "Assertive Sentence.",
+                "Interrogative Sentence.",
+                "Imperative Sentence.",
+                "Optative Sentence.",
+                "Exclamatory Sentence."
+            ]
+        },
+        {
+            sectionTitle: "Assertive Sentence",
+            sectionContent: "An assertive sentence is a simple/general statement or assertion, either affirmative or negative. </br> </br> কোনো সাধারণ বিবৃতি বা বক্তব্যকে Assertive Sentence (বিবৃতিমূলক বাক্য) বলে।",
+            examples: [
+                "English is an International Language. (Affirmative)",
+                "We do not do bad things. (Negative)",
+                "Everybody should know English. (Modal auxiliaries)"
+            ]
+        },
+        {
+            sectionTitle: "Interrogative Sentence",
+            sectionContent: "An interrogative sentence asks a question about a person or thing(s). It always ends with a note of interrogation a.k.a. question mark (?). </br> </br> Interrogative Sentence (প্রশ্নবোধক বাক্য) এমন বাক্য যা ব্যক্তি বা কিছু বিষয়ে প্রশ্ন করে। এটি সবসময় প্রশ্নচিহ্ন (?) দিয়ে শেষ হয়।",
+            examples: [
+                "Do you have your assignment ready?",
+                "Does he speak English?",
+                "Did she work abroad?",
+                "Should I go there?",
+                "Can you hear the sound?",
+                "Don’t you want any food? (Negative)",
+                "How is your business going on?",
+                "Who fixed the computer?",
+                "Whom do you support?",
+                "What are you expecting from me?",
+                "What time is it now?",
+                "How many people have died there?"
+            ]
+        },
+        {
+            sectionTitle: "Imperative Sentence",
+            sectionContent: "A sentence that expresses a request, command, order, advice, suggestion, etc. is an imperative sentence. </br> </br> Imperative Sentence (আজ্ঞাবাচক বাক্য) এমন একটি বাক্য যা অনুরোধ, আদেশ, পরামর্শ, বা সুপারিশ প্রকাশ করে।",
+            examples: [
+                "Take care of you.",
+                "Give me the pen.",
+                "Do it now.",
+                "Be honest.",
+                "Come here",
+                "Never tell a lie",
+                "Do not laugh at other's helplessness.",
+                "Let him go there.",
+                "You must do your duty."
+            ]
+        },
+        {
+            sectionTitle: "Optative Sentence",
+            sectionContent: "A sentence that expresses a wish, desire, prayer, etc. is called an optative sentence. </br> </br> Optative Sentence (ইচ্ছাবাচক বাক্য) এমন একটি বাক্য যা কোন প্রকার ইচ্ছা, আশা বা প্রার্থনা প্রকাশ করে।",
+            examples: [
+                "May you live long.",
+                "May Allah bless you.",
+                "Wish you all the best.",
+                "Long live Bangladesh."
+            ]
+        },
+        {
+            sectionTitle: "Exclamatory Sentence",
+            sectionContent: "Exclamatory sentences express strong or sudden feelings or emotions like surprise, pain, delight, anger, disgust, etc. </br> </br> Exclamatory Sentence (আশ্চর্যজনক বাক্য) এমন একটি বাক্য যা বিস্ময়, কষ্ট, আনন্দ, রাগ, বা অন্যান্য আবেগ প্রকাশ করে।",
+            examples: [
+                "Hurrah! Our cricket team has won the series.",
+                "Alas! He has failed the competition.",
+                "Bravo! You have done a great job.",
+                "What a talented girl she is!",
+                "How sweetly the cuckoo sings!",
+                "What a wonderful land Bangladesh is!",
+                "Were I a Super Hero!",
+                "What a pity!",
+                "Fantastic!",
+                "What an idea!"
+            ]
+        }
+    ]
+};
+
+
+        // Function to update content based on selected tab
+        function updateContent(tab) {
+            const tabContent = tabsData[tab];
+            contentContainer.innerHTML = '';  // Clear current content
+
+            tabContent.forEach(section => {
+                const card = document.createElement('div');
+                card.classList.add('card');
+                card.innerHTML = `
+                    <h2 class="section-title">${section.sectionTitle}</h2>
+                    <p class="section-content">${section.sectionContent}</p>
+                    <div class="example-box">
+                        <ul class="example-list">
+                            ${section.examples.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+                contentContainer.appendChild(card);
+            });
+        }
+
+        // Initial content load
+        updateContent('sentence');
+
+        // Tab button click event listener
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                const tab = button.getAttribute('data-tab');
+                updateContent(tab);
+            });
+        });
+    </script>
+</body>
+</html>
